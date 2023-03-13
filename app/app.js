@@ -13,9 +13,38 @@ const mysqlConfig = {
     port: 3306
 }
 
+const mysqlConfig2 = {
+    host: "127.0.0.1",
+    user: "root",
+    password: "r1122m0302",
+    database: "codeacademy",
+    port: 3306
+}
+
 const connection = mysql.createConnection(mysqlConfig);
 app.get("/tasks", (req, res) => {
     connection.execute("SELECT * FROM tasks", (err, result) => {
+        if (err) {
+            res.json(err);
+        } else {
+            res.json(result);
+        }
+    })
+});
+
+const connection2 = mysql.createConnection(mysqlConfig2);
+app.get("/assignments", (req, res) => {
+    connection2.execute("SELECT * FROM assignments", (err, result) => {
+        if (err) {
+            res.json(err);
+        } else {
+            res.json(result);
+        }
+    })
+});
+
+app.get("/assignments/done", (req, res) => {
+    connection2.execute("SELECT * FROM assignments WHERE done=TRUE", (err, result) => {
         if (err) {
             res.json(err);
         } else {
