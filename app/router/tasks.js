@@ -13,4 +13,15 @@ router.get("/tasks", (req, res) => {
     })
 });
 
+router.post("/tasks", (req, res) => {
+    const { body } = req;
+    tasksManagerConnection.execute("INSERT INTO tasks (toDo) VALUE (?)", [body.toDo], (err, result) => {
+        if (err) {
+            res.json(err);
+        } else {
+            res.json(result);
+        }
+    })
+})
+
 module.exports = router;
